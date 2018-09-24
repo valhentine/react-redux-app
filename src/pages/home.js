@@ -1,8 +1,10 @@
 import React from 'react'
+import { connect } from 'react-redux'
+import { getUser } from '../reducers'
 
-const Home = () => (
+const Home = (props) => (
   <div>
-    <h3>Hello, {getUserName(this.props.user) || "??"}</h3>
+    <h3>Hello, {getUserName(props.user) || "??"}</h3>
   </div>
 )
 
@@ -10,4 +12,12 @@ function getUserName(user) {
   return user == null ? null : user.name
 }
 
-export default Home
+const mapStateToProps = state => {
+  return {
+    user: getUser(state)
+  }
+}
+
+export default connect(
+  mapStateToProps
+)(Home)

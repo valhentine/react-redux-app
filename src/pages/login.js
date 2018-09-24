@@ -1,4 +1,8 @@
 import React from 'react'
+import { connect } from 'react-redux'
+import { updateUser } from '../actions.js'
+import { getUser } from '../reducers'
+import Home from './home'
 
 class Login extends React.Component {
   handleSubmit = (e) => {
@@ -15,7 +19,7 @@ class Login extends React.Component {
         <input id="name" type="text" name="name" />
         <button type="submit">Login</button>
 
-        <p>{getUserName(this.props.user) || "--unknown--"}</p>
+        <Home />
       </form>
     )
   }
@@ -25,4 +29,17 @@ function getUserName(user) {
   return user == null ? null : user.name
 }
 
-export default Login
+const mapStateToProps = state => {
+  return {
+    user: getUser(state)
+  }
+}
+
+const mapDispatchToProps = {
+  updateUser
+}
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(Login)
